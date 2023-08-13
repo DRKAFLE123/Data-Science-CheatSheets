@@ -1,0 +1,103 @@
+Stemming: 
+    CONS: might not be meaningful, intermediate word roots
+Porter Stemmer, Snowball Stemmer, Lancaster Stemmer
+Lemmatization: 
+    meaningful roots of words. 
+    CONS: Not full-proof
+Stopwords:
+    remove unnecessary repetitive words
+Bag Of Words(BBOW, CBOW):
+    after stopwords, create a list of total features (keywords)
+    for each sentence, create a vector containing headings of each feature
+    if feature is present, increment. if not 0
+    Binary BOW: 0 and 1 
+    count frequency of words in dataset
+    convert words to vectors or document matrix
+    CONS: equal representation, no added weights or value for sentiment analysis
+Term Frequency-Inverse Document Frequency(TF-IDF):
+    TF = frequency of one word in a sentence / total number of words in that sentence
+        I am a good boy, you are also a good boy
+        TF for good = 2/11
+        TF matrix is word column X sentence row
+        TF is performed on a word present in each sentence
+    IDF = log(total number of sentences in corpus / number of sentences containing the word)
+        log(3240/100)
+        IDF table is words x IDF
+        IDF is performed on a word present in the entire corpus
+        if IDF is 0 doesn't mean it is a stopword, it simply means
+        the word has most occurence in the corpus and holds same value 
+        and meaning
+    TF * IDF = 
+        TF-IDF matrix is sentences column X features row
+        instead of 0 or 1 as in BOW, we have different weights for words depending on the
+        frequency of their occurences
+        CONS: semantic info is not stored. order of words which mean something in context
+            chance of overfitting
+Word2Vec:
+    each word is represented by a vector of multiple dimensions
+    relationsship between vectors on a plane of several dimensions
+    and the semantic is also maintained
+    tokenize - create histogram - take frequent words - create a matrix with all unique words
+    King-man + woman = queen
+Recurrent Neural Networks (RNN):
+    sequence of sentence preserved
+    Used in NLP, Time Series (ARIMA, SARIMAX) working on time intervals stock exchange
+    Forward propagation with time:
+        each word is represented as a vector
+        activation function fed into the RNN
+        RNN contains multiple hidden layers with n number of neurons
+        at each instance of time t, a new word is fed into the RNN
+        certain weight is assigned to the word and passed as output
+        for second instance of time, the second word vector is passed into the RNN
+        at t2, the second input will get the same weight as t1, but will also contain the output from t1 with a different weight
+        weight initialization techniques
+    Backward propagation:
+        updating weights after each cycle to reduce loss 
+        derivative of loss w.r.t derivative of y hat
+        chain rule applied in each timestamp
+        last step in the process gives us the updated weight where we reach a global minima
+    CONS: Vanishing gradient descent activation functions:
+            sigmoid (values between 0 and 1), as we reach time instance 1, the back propagation will result in negligible value of weight
+          Exploing Gradient problem:
+            RELU (derivative > 1), value will never reach global minima
+Long Short Term Memory (LSTM) RNN:
+    Memory Cell:
+        remember and forget based on context of input
+        previous state - pointwise operation - retain and forget operation depending on weights
+    Forget Gate:
+        concatenation of two weights, one of previous state and one of current state
+        represented in the form of a linear equation
+        this equation/function is passed to a sigmoid function
+        change in context, previous state vector is different from current
+        forgetting because of change in context
+    I/P Gate:
+        adding info to memory cell
+        tanh operation - converts info between -1 and 1
+
+    O/P Gate:
+
+
+Word Embedding:
+    referrable vocabulary is taken of 1M records, sorted format
+    feature representation instead of one-hot encoding
+    one-hot encoding means higher dimension sparse matrix
+    embedding would be lower dimensions and denser matrix
+    each word represented as vector against each feature row
+    draws an analogy by calculating cosine similarity
+    analogy can be on basis of several factors like gender, POS, etc
+    dimensionality reduction
+    keras.vocab is our reference dictionary gives an index for each word vector
+    embedding layer - reduces dimensions as per our requirement or number of features
+    pad sequencing - one_hot, padding technique, sentence length
+    add dimensions
+    compile using adam optimiser, error
+    select a vocab dictionary of size 10k features -> index the word in the dictionary ->
+    represent the word as a vector using one-hot encoding -> select a sentence size ->
+    dimensionality reduction using embedding -> add embedding layer to keras with dimension, sent_length ->
+    adding dropout layer as hyperparameter
+Bidirectional RNN:
+    output of current state depends on occurence of future state
+    backward layer RNN. different from backward propagation
+    takes future value as an input
+    CONS: speech recognition, time series where future data is not static and is on-the-fly
+    

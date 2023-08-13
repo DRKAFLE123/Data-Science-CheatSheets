@@ -1,0 +1,355 @@
+features: 
+    observable data 
+labels: 
+    variables to be predicted 
+error: 
+    actual - predicted 
+Root Mean Squared Error: 
+    used to calculate squares of the residue to obtain absolute value 
+Coefficient of Determination:
+    measures amount of variance in a model
+    closer to 1, better the model predicted 
+    relationship between x and y squared
+regression: 
+    numeric value 
+classification: 
+    vector of probability value between 0 and 1 to categorize into a class 
+
+STEPS:
+
+feature engineering:
+    deriving new features from existing features by transforming or combining     
+normalization:
+    numeric features 
+imputation:
+    filling up missing data points using strategy like mean, median, 0 (SimpleImputer)
+scaling:
+    passing values through a sigmoid function to get values between 0 and 1 (MinMaxScaler)
+    standardized distribution curve 
+encoding:
+    transforming categorical features into numeric indicators (OneHotEncoder)
+Pipelining:
+    applying preprocessing techniques 
+    from sklearn.compose import ColumnTransformer
+    from sklearn.pipeline import Pipeline
+    from sklearn.impute import SimpleImputer
+    from sklearn.preprocessing import StandardScaler, OneHotEncoder
+    # Define preprocessing for numeric columns (scale them)
+    numeric_features = [6,7,8,9]
+    numeric_transformer = Pipeline(steps=[
+        ('scaler', StandardScaler())])
+
+    # Define preprocessing for categorical features (encode them)
+    categorical_features = [0,1,2,3,4,5]
+    categorical_transformer = Pipeline(steps=[
+        ('onehot', OneHotEncoder(handle_unknown='ignore'))])
+
+    # Combine preprocessing steps
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ('num', numeric_transformer, numeric_features),
+            ('cat', categorical_transformer, categorical_features)])
+
+    # Create preprocessing and training pipeline
+    pipeline = Pipeline(steps=[('preprocessor', preprocessor),
+                            ('regressor', GradientBoostingRegressor())])
+
+
+    # fit the pipeline to train a linear regression model on the training set
+    model = pipeline.fit(X_train, (y_train))
+data visualization:
+    histograms and box plots to see the relationship between features 
+removing outliers:
+    
+determine relationship between feature and label:
+    for numeric features, scatter plot against labels
+    correlation statistic
+    for categorical features box plot against labels 
+train_test_split:
+    random split - 60-40
+    date wise split - Time Series datasets
+loss function:
+    MSE: 
+        mean of squared difference between actual and predicted. smaller the MSE, better the fit 
+    RMSE: 
+        sqrt of MSE. smaller the better 
+    Coefficient of Determination:
+        measures amount of variance in a model
+        closer to 1, better the model predicted 
+        relationship between x and y squared
+Estimators for regression:
+    difference in types of cost functions used and measures taken to lessen the cost
+    regularization techniques to reduce model complexity and preventing overfitting
+    Ordinary Least Squares:
+        from sklearn.linear_model import LinearRegression
+        from sklearn.metrics import mean_squared_error, r2_score
+        from sklearn.model_selection import train_test_split
+            Linear Regression
+    Lasso or L1 Regularization:
+        from sklearn.linear_model import Lasso
+            adds Absolute Value of Magnitude of coeeficient as penalty term to loss function
+            Least Absolute Shrinkage and Selection Operator
+            Shrinkage method or penalized regression method 
+            alpha is penalty term assigned to the weight to perform shrinkage 
+            if alpha = 0, it is linear regression 
+            diamond contour which has corners
+            elliptical values can touch the corner 
+    Ridge or L2 Regularization:
+        from sklearn.linear_model import Ridge 
+            adds Squared Magnitude of coefficient as penalty term
+            penalty factor is square of the Coefficient, whereas Lasso penalty factor is magnitude of Coefficient
+            circle contour which doesn't have corners 
+            elliptical values cannot touch the corner 
+            **therefore Lasso is preffered over Ridge 
+    Decision Trees:
+        from sklearn.tree import DecisionTreeRegressor
+            Gini score indicates the loss or cost for the model. Lower the gini score, better the split is
+            other parameters for feature preference and selection: samples, gini, class, value, entropy
+            Underfitting model - Dumb; Overfitting model - Rote
+            pick out max_depth at the point where validation is just about to increase
+            Wisdom of the crowd
+            Average of different decision trees or regression models is Random Forest
+            Ensembling
+            More randomness less overfitting
+            nestimators - complexity doesn't increase, tree size doesn't get bigger, only the number of trees increase
+            n_jobs - uses all available threads on the current machine
+            max_depth, max_leaf_nodes for an RF means the number specified for each DT in the forest
+            max_features random selection of columns in each DT
+            min_samples_split, min_samples_leaf
+            class weight - more priority to Yes than No
+    Random Forests:
+        from sklearn.ensemble import RandomForestRegressor
+            Prefered RF ensemble over GBM because of highly correlated features which demands regularization. RFs handle overfitting
+            better than GBMs. Easier to impute, scale and transform more decision trees than GBMs. RFs work better woth classification problems\
+            Ensemble algorithms work by combining multiple base estimators to produce an optimal model
+            Bagging:
+                either by applying an aggregate function to a collection of base models 
+            Stacking:
+                 fitting many different models types on the same data and using another model to learn how to best combine the predictions
+            Boosting:
+                building a sequence of models that build on one another to improve predictive performance by adding weighted average of predictions
+    Gradient Boosting:
+        from sklearn.ensemble import GradientBoostingRegressor
+            builds multiple trees
+            but instead of building them all independently and taking the average result
+            each tree is built on the outputs of the previous one in an attempt to incrementally reduce the loss (error) in the model
+            find average of target - calculate predictions 
+            of residuals and so on instead of calculating the target
+            Learning Rate - reduce overfitting
+            Number of DTs
+            P = A + alpha*D1 + alpha*D2 + ...number of DTs
+            Hyperparameter tuning can yield gradient boosting better results than RF. Gradient Boosting is good for data with lesser noise
+            Perform well for regressive, unbalanced data.
+
+Hyperparameter Tuning:
+    grid search approach to try combinations from a grid of possible values 
+    for the learning_rate and n_estimators hyperparameters of the GradientBoostingRegressor estimator.
+    from sklearn.model_selection import GridSearchCV
+    from sklearn.metrics import make_scorer, r2_score
+    # Use a Gradient Boosting algorithm
+    alg = GradientBoostingRegressor()
+
+    # Try these hyperparameter values
+    params = {
+    'learning_rate': [0.1, 0.5, 1.0],
+    'n_estimators' : [50, 100, 150]
+    }
+
+    # Find the best hyperparameter combination to optimize the R2 metric
+    score = make_scorer(r2_score)
+    gridsearch = GridSearchCV(alg, params, scoring=score, cv=3, return_train_score=True)
+    gridsearch.fit(X_train, y_train)
+    print("Best parameter combination:", gridsearch.best_params_, "\n")
+
+    # Get the best model
+    model=gridsearch.best_estimator_
+    print(model, "\n")
+
+    # Evaluate the model using the test data
+    predictions = model.predict(X_test)
+    mse = mean_squared_error(y_test, predictions)
+    print("MSE:", mse)
+    rmse = np.sqrt(mse)
+    print("RMSE:", rmse)
+    r2 = r2_score(y_test, predictions)
+    print("R2:", r2)
+
+Storing/Inferencing:
+    save as a joblib.dump and use it for future references 
+
+
+Binary Classification:
+Logistic function, which forms a sigmoidal (S-shaped) curve:
+    regularization rate:
+        modification we make to a learning algorithm that is intended to reduce its generalization error but not its training error.
+        reduce overfitting by adding a gradient descent to the learning and finding global minima
+        Gaussian, Laplace, L1, L2 
+
+        
+classification_report:
+    from sklearn.metrics import accuracy_score, classification_report, precision_score, recall_score, confusion_matrix, roc_curve, roc__auc_curve
+    score sheet of precision, recall, f-1 score, support 
+        Confusion Matrix:
+            scoring system that helps us identify relation between actual test data and predicted model data
+        accuracy score:
+            (TP+TN)/(TP+TN+FP+FN) - out all of the predictions, how many were correct?
+        precision:
+            TP/(TP+FP) - of all the cases that the model predicted to be positive, how many actually are positive?
+        recall:
+            TP/(TP+FN) - of all the cases that are positive, how many did the model identify?
+        Sensitivity:
+            TP / (TP + FN)
+        Specificity:
+            TN / (TN + FP)
+        True Positives: The predicted label and the actual label are both 1.
+        False Positives: The predicted label is 1, but the actual label is 0.
+        False Negatives: The predicted label is 0, but the actual label is 1.
+        True Negatives: The predicted label and the actual label are both 0.
+        **Reduce False Negatives in case of person diseases - high Sensitivity - Type 2 error 
+        **Reduce False Positives in case of market shares - high Specificity - Type 1 error 
+        **generally there is a trade-off between Specificity and Sensitivity    
+        F-1 Score:
+            An average metric that takes both precision and recall into account.
+        Support: 
+            How many instances of this class are there in the test dataset?
+        Because logistic regression is based on probability of a true event or an untrue event, values are between 0 and 1
+        we determine a threshold value, beyond which we can categorize the label into a class 
+        .predict_proba()
+        ROC (Recieved Operator Characteristic):
+            from sklearn.metrics import roc_curve
+                A common way to evaluate a classifier is to examine the TP rate (recall) and the FP rate for a range of possible thresholds
+                These rates are then plotted against all possible thresholds
+                should go straight up on the left and parallel on the top 
+        AUC (Area Under Curve):
+            from sklearn.metrics import roc_auc_score
+                Closer the value is to 1, better the model performance 
+        
+
+
+
+Multi-class Classification:
+    Same as binary classification with an option to choose from One-vs-One or One-vs-Rest algorithm
+    overall model that combines the classifiers generates a vector of predictions 
+    the probabilities generated from the individual binary classifiers are used to determine which class to predict
+    overall metric to be considered in case of precision and recall - macro or weighted 
+    heat map representation of confusion_matrix
+
+
+
+Unsupervised Machine Learning:
+    Clustering:
+        feature and observation. unlabelled data 
+        Tightness of cluster:
+            Within Cluster Sum of Squares (WCSS)
+            increasing clusters, WCSS reduces, higher tightness 
+        Dimensionality Reduction:
+            PCA, DBSCAN, K-Means 
+        A set of K centroids are randomly chosen.
+        Clusters are formed by assigning the data points to their closest centroid.
+        The means of each cluster is computed and the centroid is moved to the mean.
+        Steps 2 and 3 are repeated until a stopping criteria is met. 
+        Typically, the algorithm terminates when each new iteration results in negligable movement of centroids and the clusters become static.
+        When the clusters stop changing, the algorithm has converged, defining the locations of the clusters - 
+        note that the random starting point for the centroids means that re-running the algorithm could result in slightly different clusters, 
+        so training usually involves multiple iterations, reinitializing the centroids each time, and the model with the best WCSS is selected.
+
+        Unlabeled datasets. 
+        Discover patterns in data. Reduce high dimensional data to lower
+        Clustering classifies objects of the closest nature near each other
+
+        Classification - Category | Label
+        Regression - Quantity 
+        Clustering - Category | Unlabel
+        Dimensionality Reduction - Visualize 
+
+        K-Means Clustering
+        find optimal centroids for each cluster
+        pick K - number of centroids
+        pick random centroids form clusters around them
+        find average of each cluster and reclassify new centroid
+        model.inertia_ - repeat steps to find lowest variance
+        Euclidean distance - pythagoras theorom
+        Mini Batch K-Means - train subsequent models with readings from one batch
+        DBSCAN - epsilon and min_samples
+        epsilon is radius of cluster, min_samples is the number of cluster points that can be accomodated
+        core points, reachable points and noise points
+
+        k-means uses cluster centers to determine clusters
+        dbscan uses nearness of points to determine cluster center
+        dbscan more or less revolves around coalescing clusters
+
+        Traffic Congestion Detection and Reduction using K-Means Clustering
+
+
+        Dimensionality Reduction, principal component analysis
+        represent multi-dimensional projections on linear lines
+        preserving maximum information, minimizing information loss
+
+        Hierarchical Clustering:
+            - Dendogram - bottom to top
+            - find the longest vertical line through which there are no horizontal lines passing  
+            - Max time compared to k-means clsutering
+
+
+        Agglomerative Clustering:
+
+        Association Clustering:
+        
+
+    Collaborative Filtering:
+        In Collaborative Filtering, we tend to find similar users and recommend what similar users like. 
+        In this type of recommendation system, we don’t use the features of the item to recommend it, 
+        rather we classify the users into the clusters of similar types, 
+        and recommend each user according to the preference of its cluster. 
+
+        Collaborative filtering - movie recommendations
+        Neural Collaborative Filtering
+        Build a model to predict the rating a user would give to a movie 
+        he hasn't seen based on ratings given by other users with similar tastes
+
+        each user and movie is represented by a certain number of vectors
+        number of vectors are equal
+        sum of dot products of all the movie and user vectors
+        genre of movie and user likeness of that genre
+        N-factors determines number of vectors for each user and movie
+        user and movie bias constant added for each set
+        mean squared loss and gradient descent optimizer
+
+
+    K-means Clustering:
+        how to cluster?
+            1. try different k values until we find suitable clusters
+            2. initialize random k number of centroids - shortest / Euclidean distance 
+            3. compute average of distance between other points and calculate position of new centroid
+            4. draw a line joining both the centroids and a normal to that line to find efficient clusters 
+        elbow method
+            - used to optimize k value 
+            - WCSS - Within Cluster Sum of Squares
+
+    K-means ++:
+        initialize clusters as far away as possible
+        silhouette clustering - value closer to 1 than -1 then, model is good 
+        a(i) = sum of distances of points from the centroid of Cluster 1 / average of distances 
+        b(i) = sum of distances of all points of Cluster 2 to all points of Cluster 1 / average of all distances 
+
+        if b{i} >> a(i) then it is a good model. Value is between -1 and 1, so closer the value is towards 1, better the model is 
+    
+    DB Scan Clustering:
+        Density-Based Spatial Clustering of Applications and Noise
+        helps in non-clustering of outliers 
+        1. epsilon:
+            radius of the cluster 
+        2. min points:
+            hyperparameter - if there are at least min points around a point with a radius of epsilon, then that point is considered as a core point 
+        3. core point:
+            at least min points around a point
+        4. border point:
+            at least one point around a core point 
+        5. noise point:
+            no points around a core point - outlier 
+            
+
+
+        
+
+

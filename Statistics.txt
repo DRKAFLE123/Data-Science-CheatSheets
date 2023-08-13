@@ -1,0 +1,167 @@
+
+population:
+    entire dataset 
+sample:
+    simple random sampling: every occurence has equal chances of occurence
+    stratified sampling: population split into non-overlapping groups or strata
+    systematic sampling: pick every nth individual 
+    convenience sampling: domain experts
+    **depends on use case
+Measure of Central Tendency:
+    mean:
+        average. outliers can adversely affect mean. continuous data imputation
+    median:
+        middle element. works well with outliers 
+    mode:
+        highest occurence. works well with categorical data 
+Measure of Dispersion:
+    dispersion means spread
+    standard deviation:
+        unit to measure how many SD away from the mean a value lies
+    variance:
+        talks about spread of the data
+        higher variance, values are spread wide across the range 
+    range:
+        max - min 
+Finding Outliers:
+    percentile:
+        percentage of values below the number in total sample
+        what is the value at a certain percentile? index of percentile/100 * n+1
+        q1 = 25% * n+1
+        q3 = 75% * n+1
+    quartile:
+        lower fence = q1 -1.5(iqr)
+        upper fence = q3 + 1.5(iqr)
+        **any value in the dataset below lower fence or above upper fence are outliers
+    inter quartile range:
+        q3 - q1
+Types of Distribution:
+    Probability Density Function
+    Cumulative Distributive Function
+    ** integrating PDF we get CDF and differentiating CDF we get PDF 
+    Gaussian Kernel Density Estimation
+    Gaussian Bell Curve/Normal Distribution Curve:
+        symmetrical data distribution on either side of median
+        always follows empirical formula
+    Empirical Formula:
+        68-95-99.7 Rule
+        first std deviation (68% of data points are present)
+        second std deviation (95% of data points are present)
+    z-score:
+        how much std deviation is a value away from the mean 
+        value - mean / std deviation
+        after applying z-score to normal distribution curve, 
+        we get standard normal distribution, where mean = 0 and std deviation = 1
+        Standardization:
+            mean = 0, std deviation = 1
+        Normalization:
+            define lower bound and upper bound using MinMax Scaler in Machine Learning
+        Body and Tail:
+            left to the curve normal is body and to the right is tail 
+            refer z-table to calculate area under curve 
+Probability:
+    Addition Rule for:
+        Mutually Exclusive:
+            P(H or T) = P(H) + P(T)
+        Non Mutual Exclusive:
+            P(Q and Heart) = 1/52
+            P(Q or Heart) = P(Q) + P(Heart) - P(Q and Heart)
+    Multiplication Rule for:
+        Independent Events:
+            P(4 and 6) = P(4) * P(6)
+        Dependent Events:
+            P(Q and then an A) = P(Q) * P(B/A) (Conditional Probability)
+            useful in Bayes' Theorem 
+            P(Q and then an A) = 4/52 * 4/51
+Hypothesis Testing:
+    Statistical method to make decisions about the population with the help of only sample data 
+    One-tailed and two-tailed test 
+    Significance Value:
+        alpha = 0.05, defined by domain expert 
+    Confidence Interval:
+        1 - significance value 
+        if experiment falls inside confidence interval, we can say 
+        null hypothesis is accepted
+        point estimate +- margin of error 
+    Null Hypothesis (H0):
+        Condition to accept experiment
+    Alternate Hypothesis (H1):
+        Condition reject experiment
+    Decision Rule:
+        For a one-tailed test, alpha value remains same to reject or accept 
+        but for two-tailed test, alpha = alpha/2 on either side of the curve 
+        if alpha = 0.05, determine whether problem statement is one-tailed or two-tailed 
+        CI = 1-0.05 = 0.95 or 95%. if z-score of a value is within the CI, accept H0 else reject 
+        refer z-table to determine tail points. right z-table and 1 - right = left 
+        if z-score of a value > right tail point or < left tail point, it means 
+        the value is not within the CI 
+        which means reject H0 
+        z = (sample/statistic mean - population/parametric mean) * sqrt(sample number) /std deviation
+    Z-test:
+        if z-score lies below or beyond tail points, reject null hypothesis
+    p-value:
+        smaller the p-value, reject the H0 
+        area under the curve beyond the tail points or the z-score 
+        if p-value <= significance value, reject the H0 
+    Experiment:
+        Perform the experiment 
+    Reject or Accept:
+        if p-value is more than significance value and lies in confidence interval
+        accept null hypothesis or accept alternate hypothesis 
+            Reject Null Hypothesis, when actual is false - Yes (True -ve)
+            Reject Null Hypothesis, when actual is true - Type 1 error
+            Accept Null Hypothesis, when actual is false - Type 2 error
+            Accept Null Hypothesis, when actual is true - Yes (True +ve)
+statistic correlation:
+    value between -1 and 1, where 1 means directly proportional and -1 means inversely proportional
+    but correlation is NOT causation, correlation between two vectors can be used as a value to understand the changing values between them
+        if one value changed in a particular direction
+confidence score:
+    
+Central Limit Theorem
+Median Absolute Deviation
+Bayes' Theorem 
+histogram:
+    continuous values 
+bar plot :
+    discrete values 
+box plot: 
+    median is the segregation point. helps in determining outliers. 
+    Five number summary: minimum, q1, median, q3, maximum
+scatter plot
+heat map 
+eigen value 
+eigen vector
+
+use statistics to find relationship between data points: 
+    find outliers using the quartile method, z-score 
+    determine imputation techniques
+    check if the data is normally distributed or not
+    same dataset from two or more sources would mean overlapping which means bi-modal or multi-modal 
+    target should be to convert non-normal data to normalized or standardized data 
+    so that we remove outliers and generic biases from the dataset 
+    stratification of clssification data during train, test split 
+    variance and standard deviation will help us find the central limit tendency
+    CLT of sample and population should be same
+    probability density function helps us segment classes from a histogram, boxplot and scatter plots 
+    mean, median and mode help us understand how skewed our dataset is
+    correlation helps us understand how two variables are related to each other
+
+Matplotlib useful commands
+
+.axvline
+.plot
+.hist 
+.boxplot 
+.axis
+.bar
+.figure
+.title 
+.xtitle
+.ytitle
+.show
+
+
+
+
+

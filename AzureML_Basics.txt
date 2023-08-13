@@ -1,0 +1,149 @@
+Azure Machine Learning
+    Compute instance - create a workspace
+    Compute cluster - create a VM with dedicated CPUs etc 
+    Create a pipeline in designer studio
+    Create a dataset 
+    Apply transformations
+        Select Columns in dataset 
+        clean missing data 
+        normalize data 
+    Add training modules
+        split data 
+        choose algorithm 
+        train model 
+    Assign data to clusters / scoring the model 
+    Evaluate model 
+    Create an inference pipeline 
+        remove data and enter data manually
+        remove evaluate model and add python script
+    Deploy service
+    Test the service 
+        
+
+Train - Deploy - Automate - Manage - Track
+
+Microsoft Services
+    Machine Learning 
+    Anomaly Detection
+    Computer Vision 
+    Natural Language Processing 
+
+
+Workspace 
+    location for all Azure ML artifacts
+    maintain history
+    preserve snapshots 
+    Compute Targets
+        Compute Instance - notebooks
+        Compute Cluster - experiment/pipelines
+        Inference Cluster - deployments
+        Attached Cluster - customized pipeline 
+    Storage accounts
+    App insights
+    Key Vault 
+    Container registry
+
+
+
+
+Azure Cognitive Services    
+    Form Recognizer
+    Metrics Advisor
+    Video Analyzer
+    Immersive Reader
+    Bot Service 
+    Cognitive Search 
+    Translator Service
+        Detect
+        Translate
+        Transliterate 
+    Language Service 
+        Detection 
+        Key phrase extraction
+        sentiment analysis
+        NER 
+        Entity Linking
+    Speech-to-Text
+        Batch transcription
+        Speech config - encapsulate info to connect to server; location and key 
+        Audio config - input of audio source
+        Speech Recognizer - proxy client for Speech-to-Text API, call underlying APIs to generate responses
+        Speech Recognizer Result - process response of service 
+        Audio format - file format, bit depth, sample rate
+        Voices - Standard (synthetic) and Neural (natural sounding) 
+    Speech Synthesis Markup Language
+        XML based syntax describing characteristics of speech to be generated
+        specify a tone - excited, cheerful using DNN
+        insert pauses or silence
+        specify phonemes - read "SQL" as "sequel"
+        adjust prosody - speaking rate, pitch, timbre
+        use common 'say-as' rules 
+        use recordings or audio files 
+    Language Understanding
+        Publishing slot - staging (publish and test new versions of your language) and production (live models)
+        Publish settings    
+            sentiment analysis - score of 0-1
+            spelling correction
+            speech priming - use language model. sends the model to speech service ahead of prediction to improve intent recognition
+    Language Understanding from Speech
+        Speech Config 
+        Audio Config
+        Speech + Audio - Intent Recognizer 
+        Intent Recognier Object - Recognize Once Async
+        Response 
+            duration
+            intent id - top intent name 
+            reason - enumerated value for recognized intent 
+            Result - recognized speech; no match; canceled 
+        Utterances
+            anything a user speaks
+        Intent 
+            meaning of Utterances
+        Define entities
+            ML entities 
+            list
+            regex
+            pattern.any()
+        Pre-built models 
+            domains - Calendar, Email, Weather, RestaurantReservation, HomeAutomation
+            intent - CreateCalendarEntry, SendEmail, TurnOn, AddToDo
+            entities - Age, Email, PersonName, Number, Geography, DateTime
+    Bot Framework
+        Language generation
+        visual design surface in Compose
+        reusable assets in the form of JSON and MD files 
+        Dialog
+            bot will likely make use multiple dialogs to implement multi-turn conversations
+            gathers information from the user, storing state between turns
+            main dialog - begin conversations with user
+            child dialog - subsequent message
+            adaptive dialog - interruptive, cancellation and context switches at any time 
+                one or more actions 
+                Language Generator 
+                recognizer to determine intent 
+                Triggers, which are fired by actions or based on the intent detected by the recognizer
+                memory - values stored as properties. user scope - for entire session of interaction and dialog scope 
+            maintain state or restart 
+            text, speech, rich user controls, cards
+    Question Answering
+        knowledge base of question and answer pairs 
+        published to a REST endpoint and consumed by a bot 
+        websites, files with structured text, existing chats 
+        different from language understanding - static answers, utterances are questions only, easier to interprete with less errors
+        Active learning and defining synonyms 
+            implicit feedback - incoming questions are processed, similarity scores matched and clustered as alternate matches 
+            explicit feedback - possible number of matches by specifying top parameter 
+    Azure Bot Service 
+    Bot Framework SDK 
+    Bot Framework Service 
+        Empty bot, echo bot, core bot
+        Adapter class - handles communication with user's channel 
+        conversations are activities (Process activity) which include turns (Turn Handler) 
+        Activity Handler - event methods to override different kinds of activities
+        Dialogs - more complex patterns to handle stateful multi-turn conversations 
+    Computer Vision 
+        Face, OCR, Speech, Topics, Sentiment, Labels, Content moderation, scene segmentation 
+        Custom insights - People, Language, Brands, Animated characters 
+
+
+        
